@@ -1,4 +1,4 @@
-const V='evq-v6',A=['./','ui.js','qr.svg','index.html','offline.html','manifest.json','style.css','storage.js','queue-engine.js','app.js','admin.js','pwa.js','icon-192.png','logo.png','logo-96.png','favicon.png','og-image.jpg','admin/index.html'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(V).then(c=>c.addAll(A)).then(()=>self.skipWaiting())));
+const V='evq-v7',A=['./','index.html','offline.html','manifest.json','style.css','ui.js','storage.js','queue-engine.js','app.js','admin.js','pwa.js','logo.png','logo-96.png','icon-192.png','icon-512.png','favicon.png','qr.svg'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(V).then(c=>Promise.allSettled(A.map(u=>c.add(u)))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(V).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request).then(r=>r||caches.match('offline.html'))))});
+self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||!r.url.startsWith(self.location.origin))return;e.respondWith(fetch(r).then(x=>{if(x.ok){const c=x.clone();caches.open(V).then(h=>h.put(r,c))}return x}).catch(()=>caches.match(r).then(x=>x||(r.mode==='navigate'?caches.match('index.html').then(i=>i||caches.match('offline.html')):Response.error()))))});

@@ -85,3 +85,7 @@ nav.bot a{position:relative;transition:color .15s}nav.bot a.on::before{content:"
 .toast{border-radius:14px;background:var(--glass);box-shadow:var(--glow)}
 @media(min-width:1000px){.wrap{max-width:1040px}.home{gap:16px}.hero{height:300px}.hero-t h1{font-size:40px}.stat b{font-size:34px}.main{padding:28px 32px}}
 @media(min-width:1400px){.in{max-width:1400px}}
+/* PWA install + perbaikan badge di judul */
+.pwa-on [data-install],.pwa-on .inst{display:none!important}nav.bot a.inst{display:none}@media(min-width:1000px){nav.bot a.inst{display:flex;color:var(--g);font-weight:700;border:1px solid rgba(25,230,140,.35)}}
+h1 .demo{-webkit-text-fill-color:#3a2b00;background:var(--y);vertical-align:middle;margin-left:6px}
+.imod{position:fixed;inset:0;z-index:200;background:rgba(3,8,15,.7);display:grid;place-items:end center;padding:14px}@supports(backdrop-filter:blur(4px)){.imod{backdrop-filter:blur(6px)}}.imc{width:100%;max-width:440px;background:var(--sf);border:1px solid rgba(25,230,140,.3);border-radius:24px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.5),var(--glow)}.imc h2{font-size:20px}.imc ol{padding-left:20px;line-height:1.7}@media(min-width:700px){.imod{place-items:center}}
