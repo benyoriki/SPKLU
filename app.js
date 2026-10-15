@@ -10,7 +10,7 @@ const demo='<span class=demo>MODE DEMO</span>',QURL='https://benyoriki.github.io
 const chargers=()=>`<div class="grid g3">${S.chargers.map(c=>`<div class=stat><b>${esc(c.id)}</b><span class="badge ${c.status}">${CL[c.status]}</span><small>${esc(c.connector)} · ${c.kw} kW</small></div>`).join('')}</div>`;
 const V={
 home(){const k=cnt(),n=S.chargers.filter(c=>c.status==='available'||c.status==='using').length||1,est=Math.max(5,Math.ceil((k.w+1)*S.settings.minPerCar/n)),t=mine();
-return`<div class=home><header class=top><div class=logo data-tap=1>${ic('bolt')}<span>EV <b>QUEUE</b></span></div>${demo}</header>
+return`<div class=home><header class=top><div class=logo data-tap=1>${lg()}<span>EV <b>QUEUE</b></span></div>${demo}</header>
 <section class=hero>${ART}<div class=hero-t><h1>${esc(S.settings.name)}</h1><p><i class="dot ${k.fa===S.chargers.length?'r':''}"></i>Beroperasi · 06.00–22.00</p><small>${esc(S.settings.addr)}</small></div></section>
 <div class="grid g4">${[['grid','Total',S.chargers.length,''],['plug','Tersedia',k.av,'c'],['bolt','Mengisi',k.us,'g'],['alert','Gangguan',k.fa,'r']].map(([i,l,v,c])=>`<div class="stat ${c}">${ic(i)}<b>${v}</b><small>${l}</small></div>`).join('')}</div>
 <div class="card q" style="margin-top:12px"><div><small>Kendaraan menunggu</small><b>${k.w}</b></div><div><small>Estimasi jika ambil sekarang</small><b>±${est} mnt</b></div></div>
@@ -26,7 +26,7 @@ form(){const p=S.profile,vs=p?p.vehicles:[];return`<h1>Ambil Nomor Antrean</h1><
 qr(){return`<h1>Scan QR</h1><div class=card style="text-align:center"><img src="qr.svg" alt="QR menuju antrean SPKLU" width=220 height=220 style="background:#fff;padding:8px;border-radius:12px;max-width:100%" onerror="this.outerHTML='<p class=err>QR gagal dimuat. Buka tautan di bawah.</p>'"><p>Arahkan kamera HP atau Google Lens ke QR di lokasi, atau buka tautan ini:</p><p><b style="word-break:break-all">${esc(QURL)}</b></p></div><p class=mu style="font-size:13px">Scan lewat kamera di dalam aplikasi belum tersedia. QR tidak berisi data pribadi.</p>`},
 ticket(){const t=mine();if(!t)return`<h1>Tiket Antrean</h1><div class=card><p>Anda belum punya tiket aktif.</p><a class=btn href="#form">Ambil Nomor Antrean</a></div>`;
 const st=['WAITING','CALLED','READY','CHARGING','COMPLETED'],i=st.indexOf(t.status),ch=S.chargers.find(c=>c.id===t.charger),w=t.status==='WAITING',kv=(l,v)=>`<div><small>${l}</small><b>${v}</b></div>`;
-return`<article class=tk><div class=tk-h><span>${ic('bolt')} ${esc(S.settings.name)}</span><span class="badge ${t.status}">${SL[t.status]}</span></div><div class=tk-n><small>Nomor antrean</small><div class=big>${t.no}</div></div>
+return`<article class=tk><div class=tk-h><span>${lg('lg sm')} ${esc(S.settings.name)}</span><span class="badge ${t.status}">${SL[t.status]}</span></div><div class=tk-n><small>Nomor antrean</small><div class=big>${t.no}</div></div>
 ${t.status==='CALLED'?`<div class=tm><small>Konfirmasi dalam</small><div class=timer id=cd data-d="${t.deadline}"></div><small>Menuju ${esc(ch?ch.name:'charger')}</small></div>`:''}<div class=tk-sep></div>
 <div class=kv>${kv('Plat',esc(t.plat))}${kv('Kendaraan',(t.type==='moto'?'Motor · ':'Mobil · ')+esc(t.model))}${kv('Posisi',w?EVQ.position(S,t):'–')}${kv('Estimasi',w?'±'+EVQ.eta(S,t)+' menit':'–')}${kv('Charger',esc(ch?ch.name:'Belum ditentukan'))}${kv('Terdaftar',tm(t.created))}</div>
 <div class=tk-b><div class=steps>${['Menunggu','Dipanggil','Siap','Mengisi','Selesai'].map((n,k)=>`<div class="${k<=i?'on':''}"><i></i>${n}</div>`).join('')}</div>
