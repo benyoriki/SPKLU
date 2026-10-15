@@ -7,7 +7,7 @@ tickets:[T(1,'B 4455 KLM','car','Hyundai Ioniq 5','COMPLETED',90),T(2,'D 2211 XY
 profile:null,log:[{at:now,who:'sistem',msg:'Data demo dibuat'}]}}
 function load(){if(mem)return mem;try{const r=localStorage.getItem(K);mem=r?JSON.parse(r):seed();if(!mem||!mem.tickets)throw 0}catch(e){mem=seed();try{localStorage.removeItem(K)}catch(_){}}return mem}
 function save(s){mem=s;try{localStorage.setItem(K,JSON.stringify(s));ok=true}catch(e){ok=false}return ok}
-function reload(){mem=null;return load()}
+function reload(){if(!ok&&mem)return mem;mem=null;return load()}
 function reset(){mem=seed();try{localStorage.removeItem('evq_my')}catch(e){}save(mem);return mem}
 function exportData(){return JSON.stringify(load(),null,1)}
 return{load,save,reload,reset,exportData,get ok(){return ok}}})();

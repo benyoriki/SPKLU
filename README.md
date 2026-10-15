@@ -1,27 +1,15 @@
-# EV Queue 2026 (prototype)
-Vanilla HTML/CSS/JS + localStorage + PWA. Tanpa build.
-
-## Jalankan lokal
-`python3 -m http.server 8000` lalu buka http://localhost:8000/ (admin: /admin/)
-
-## GitHub Pages
-Struktur datar: semua file di root, hanya folder `admin/`. Upload semua isi folder ke repo → Settings → Pages → Deploy from branch `main` / root. Semua path relatif, aman untuk subfolder `https://user.github.io/EV-Queue/`.
+# EV Queue 2026 (prototype, MODE DEMO)
+HTML/CSS/JS murni + localStorage + PWA. Struktur datar: semua file di root, satu-satunya folder `admin/`.
+Situs: https://benyoriki.github.io/SPKLU/ — Admin: /admin/
 
 ## Akun demo admin (simulasi, BUKAN keamanan)
-- admin / admin123
-- operator / operator123
+admin / admin123 · operator / operator123. Reset: tombol "Reset Data Demo" (Akun Saya / Admin → Pengaturan).
 
-Reset data: tombol "Reset Data Demo" (Akun Saya atau Admin → Pengaturan).
+## Ganti QR saat domain berubah
+`pip install segno` lalu: `python3 -c "import segno;segno.make('URL-BARU/#queue').save('qr.svg',scale=8,border=2)"`; ubah juga konstanta `QURL` di `app.js` dan `admin.js`.
 
 ## Keterbatasan
-- localStorage tidak tersinkron antar browser/HP; antrean multi-perangkat butuh backend.
-- Timer dihitung dari timestamp absolut dan diperiksa saat halaman terbuka; tidak ada penjadwal server.
-- Login admin hanya di sisi klien.
+localStorage hanya berlaku di browser/perangkat yang sama (tidak real-time lintas perangkat). Timer memakai timestamp absolut dan dievaluasi saat halaman terbuka; tidak ada penjadwal server. Login admin hanya di sisi klien.
 
 ## Migrasi
-Firebase Realtime Database/Firestore + Auth, Cloud Functions untuk transaksi antrean (call/skip/expire terjadwal), aturan keamanan per peran, FCM untuk Web Push.
-
-## Sudah berfungsi vs belum
-Berfungsi: ambil/batal tiket, validasi & anti-duplikat, mesin status, panggil/lewati/mulai/selesai, timer 5 menit, gangguan charger, akun lokal, kendaraan tersimpan, tema, CSV, reset, PWA/offline dasar.
-Belum/simulasi: QR code, grafik, push/WhatsApp/SMS, drawer admin ponsel (sidebar menjadi bar horizontal), halaman terpisah per tampilan (memakai hash di satu halaman), foto SPKLU.
-Belum diuji di browser sungguhan.
+Firebase Auth + Realtime Database; Cloud Functions untuk callNext/skip/expire terjadwal. `queue-engine.js` (logika) terpisah dari UI sehingga dapat dipindah ke Functions.
