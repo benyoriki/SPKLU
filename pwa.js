@@ -1,1 +1,2 @@
-if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register(document.currentScript?.dataset.sw||'sw.js').catch(()=>{}));
+const SWP=document.currentScript?.dataset.sw||'sw.js';
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register(SWP).catch(()=>{}));
